@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Chhatresh Khatri",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-ip": "^1.0.4",
+    "express-useragent": "^1.0.15",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^6.12.0",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^2.0.22",
+    "request-ip": "^3.3.0"
+  }
+}
