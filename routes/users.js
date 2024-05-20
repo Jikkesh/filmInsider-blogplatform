@@ -4,11 +4,11 @@ import { login, signup } from '../controllers/auth.js'
 import { getAllUsers, updateProfile } from '../controllers/users.js'
 import auth from '../middleware/auth.js'
 
-const router = express.Router();
+const userRoutes = express.Router();
 
-router.post('/signup', signup)
-router.post('/login', login)
-router.get('/getAllUsers', getAllUsers)
-router.patch('/update/:id', auth, updateProfile)
+userRoutes.post('/signup', signup)
+userRoutes.post('/login', login)
+userRoutes.get('/users', getAllUsers)
+userRoutes.patch('/update/:id', auth, updateProfile)
 
-export default router;
+export default userRoutes;

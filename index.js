@@ -11,17 +11,17 @@ import geolocationMiddleware from './middleware/location.js'
 const app = express();
 dotenv.config();
 
-
 app.use(express.json({limit: "30mb", extended: true}))
 app.use(express.urlencoded({limit: "30mb", extended: true}))
 app.use(cors());
+
 
 app.use(geolocationMiddleware);
 app.use(userInformation);
 
 app.get('/',(req, res) => {
     res.send("This is a stack overflow clone API by Jikkesh Kumar")
-})
+});
 
 app.use('/user', userRoutes )
 app.use('/questions', questionRoutes)

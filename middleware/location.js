@@ -1,32 +1,41 @@
-import requestIp from "request-ip";
-import fetch from "node-fetch"; 
+import requestIp from 'request-ip';
+import fetch from 'node-fetch';
 
 const geolocationMiddleware = async (req, res, next) => {
-    // const clientIp = "122.178.239.104";
-
-    const clientIp = requestIp.getClientIp(req); 
-    console.log(clientIp);
+    const clientIp = requestIp.getClientIp(req);
 
     try {
         const response = await fetch(`https://ipinfo.io/${clientIp}?token=b2148d886c6406`);
+        if (!response.ok) {
+            throw new Error(`IP geolocation service error: ${response.statusText}`);
+        }
         const data = await response.json();
 
         const { country, region, city, loc } = data;
 
         req.geolocation = {
             clientIp,
-            country,
-            region,
-            city,
-            coordinates : loc.split(','),
+            country: country || 'Unknown',
+            region: region || 'Unknown',
+            city: city || 'Unknown',
+            coordinates: loc ? loc.split(',') : ['0', '0'],
         };
+        
         req.locationData = req.geolocation;
-        console.log(req.geolocation);
 
-        next(); 
+        next();
     } catch (error) {
         console.error('Error fetching IP geolocation:', error);
-        console.log('Internal server error' );
+        req.geolocation = {
+            clientIp,
+            country: 'Unknown',
+            region: 'Unknown',
+            city: 'Unknown',
+            coordinates: ['0', '0'],
+        };
+        req.locationData = req.geolocation;
+        
+        next();
     }
 };
 
